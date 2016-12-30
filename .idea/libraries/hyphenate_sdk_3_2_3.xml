@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="hyphenate-sdk-3.2.3">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.hyphenate/hyphenate-sdk/3.2.3/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.hyphenate/hyphenate-sdk/3.2.3/jars/libs/hyphenatechat_3.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.hyphenate/hyphenate-sdk/3.2.3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

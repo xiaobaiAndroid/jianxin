@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/re_weixin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:padding="3dp" >
+
+            <com.bzf.jianxin.main.customwidget.maintab.GradientIconView
+                android:id="@+id/vIconWX"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                custom:top_icon="@drawable/weixin_normal"
+                custom:bottm_icon="@drawable/weixin_pressed"
+                android:layout_centerHorizontal="true"
+                />
+            
+
+     <com.bzf.jianxin.main.customwidget.maintab.GradientTextView
+                android:id="@+id/vTextWX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_below="@id/vIconWX"
+                android:layout_centerHorizontal="true"
+                custom:text="简信"
+                />
+
+            <TextView
+                android:id="@+id/unread_msg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_contact_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           	android:clickable="true"
+           	android:gravity="center_horizontal"
+            android:padding="3dp" >
+
+            <com.bzf.jianxin.main.customwidget.maintab.GradientIconView
+                android:id="@+id/vtIconContacts"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                custom:top_icon="@drawable/contact_list_normal"
+                custom:bottm_icon="@drawable/contact_list_pressed"
+                android:layout_centerHorizontal="true"
+                />
+            
+            <com.bzf.jianxin.main.customwidget.maintab.GradientTextView
+                 android:id="@+id/vTextContacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                custom:text="通讯录"
+                android:layout_below="@id/vtIconContacts"
+                android:layout_centerHorizontal="true"
+                
+                />
+
+            <TextView
+                android:id="@+id/unread_address_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_find"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           	android:clickable="true"
+            android:padding="3dp" >
+
+            <com.bzf.jianxin.main.customwidget.maintab.GradientIconView
+                android:id="@+id/vtIconFind"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                custom:top_icon="@drawable/find_normal"
+                android:layout_centerHorizontal="true"
+                custom:bottm_icon="@drawable/find_pressed"/>
+            
+           <com.bzf.jianxin.main.customwidget.maintab.GradientTextView
+                android:id="@+id/vTextFind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                custom:text="发现"
+                android:layout_below="@id/vtIconFind"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:padding="3dp" >
+
+             <com.bzf.jianxin.main.customwidget.maintab.GradientIconView
+                android:id="@+id/vtIconMe"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                custom:top_icon="@drawable/profile_normal"
+                custom:bottm_icon="@drawable/profile_pressed"
+                 android:layout_centerHorizontal="true"/>
+             
+   		<com.bzf.jianxin.main.customwidget.maintab.GradientTextView
+                android:id="@+id/vTextMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                custom:text="我"
+                android:layout_below="@id/vtIconMe"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+    
+    
+
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mRl_conversation_item"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:clickable="true"
+    android:background="@android:color/white"
+    android:layout_marginBottom="1dp"
+    >
+
+
+        <ImageView
+            android:id="@+id/mIv_avatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/main_contact_newfriend"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_centerVertical="true"
+            />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/mIv_avatar"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="4dp"
+        >
+
+        <com.bzf.jianxin.main.customwidget.BadgeView
+            android:id="@+id/mBadgeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="12sp"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/mTv_username"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/mIv_avatar"
+        android:singleLine="true"
+        android:text="张三" />
+
+    <TextView
+        android:id="@+id/mTv_newMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/mIv_avatar"
+        android:singleLine="true"
+        android:text="新消息" />
+
+    <TextView
+        android:id="@+id/mTv_time"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="24dp"
+        android:layout_toRightOf="@id/mTv_username"
+        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="6dp"
+        android:singleLine="true"
+        android:text="20:12" />
+
+</RelativeLayout>

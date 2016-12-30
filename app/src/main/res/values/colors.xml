@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- toolbar（actionbar）颜色 -->
+    <color name="colorPrimary">#393A3F</color>
+    <!-- 状态栏颜色 -->
+    <color name="colorPrimaryDark">#303135</color>
+    <!-- 窗口的背景颜色 -->
+    <color name="colorAccent">@android:color/darker_gray</color>
+
+    <color name="common_top_bar_blue">#22292c</color>
+    <color name="set_bg">#EBEBEB</color>
+</resources>
