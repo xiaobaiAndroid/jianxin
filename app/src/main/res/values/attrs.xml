@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <attr name="top_icon" format="reference"></attr>
+    <attr name="bottm_icon" format="reference"></attr>
+    
+    <declare-styleable name="GradientIconView">
+        <attr name="top_icon"/>
+        <attr name="bottm_icon"/>
+    </declare-styleable>
+    
+    <attr name="text" format="string"></attr>
+    <attr name="textSize" format="dimension"></attr>
+    <attr name="top_text_color" format="color"></attr>
+    <attr name="bottm_text_color" format="color"></attr>
+    
+    <declare-styleable name="GradientTextView">
+        <attr name="text"/>
+        <attr name="textSize"/>
+        <attr name="top_text_color"/>
+        <attr name="bottm_text_color"/>
+    </declare-styleable>
+</resources>

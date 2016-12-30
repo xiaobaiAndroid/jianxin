@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".register.widget.RegisterActivity">
+
+    <include layout="@layout/title_bar"
+        android:id="@+id/toolbar_layout"
+        ></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:layout_below="@id/toolbar_layout"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="账号："
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+                android:hint="请输入账号"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:inputType="text"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/ib_clearUserName"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="8dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/abf" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_usernameLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/an1"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="密码："
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_psw"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+                android:hint="请输入密码"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/ib_clearPsw"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="8dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/abf" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_pswLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/an1"></View>
+
+        <Button
+            android:id="@+id/bt_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/btn_qtlogin_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="注 册"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

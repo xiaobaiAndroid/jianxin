@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+    </style>
+    
+    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!--指定的返回键的颜色-->
+        <item name="colorControlNormal">@android:color/white</item>
+        <!--指定toolbar的高度-->
+        <!--<item name="android:actionBarSize">48dp</item>-->
+    </style>
+
+    <style name="editTextBg_login" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/et_bg_login</item>
+    </style>
+
+
+    <!-- 右上角popupwindow -->
+    <style name="AnimationPreview" parent="@android:style/Widget.PopupWindow">
+        <!--<item name="android:windowEnterAnimation">@anim/fade_in</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/fade_out</item>-->
+    </style>
+</resources>
