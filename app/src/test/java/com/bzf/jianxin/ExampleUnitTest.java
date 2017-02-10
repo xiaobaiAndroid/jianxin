@@ -1,8 +1,8 @@
 package com.bzf.jianxin;
 
-import org.junit.Test;
+import com.bzf.jianxin.commonutils.FileTool;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
@@ -10,7 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        try {
+            String content = "张三";
+            String charsetName = "ISO-8859-1";
+            FileTool.encode(content,charsetName);
+            FileTool.decode(content.getBytes(),charsetName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

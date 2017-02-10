@@ -1,5 +1,6 @@
 package com.bzf.jianxin.main.widget;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.bzf.jianxin.R;
@@ -14,12 +15,12 @@ import com.bzf.jianxin.base.BaseFragment;
 public class MessageListFragment extends BaseFragment{
 
     @Override
-    protected void init(View view) {
-
+    protected View createView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.fragment_messagelist,null);
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_messagelist;
+    protected void init() {
+
     }
 }

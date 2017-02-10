@@ -24,6 +24,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginPresenter{
 
     @Override
     public void login(final LoginView view, String userName, String psw) {
+
         view.showLoginDialog();
         mUserModel.login(userName, psw, new BaseCallbackListener<User>() {
             @Override
@@ -55,4 +56,5 @@ public class LoginPresenterImpl extends BasePresenter implements LoginPresenter{
             }
         });
     }
+
 }
