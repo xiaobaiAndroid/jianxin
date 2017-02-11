@@ -100,4 +100,5 @@ public class ContactListFragment extends BaseFragment<ContactListPresenterImpl> 
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
 }

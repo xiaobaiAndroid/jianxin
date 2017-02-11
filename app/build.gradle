@@ -36,18 +36,16 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
+//    compile 'com.android.support:appcomdpat-v7:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
-
     //Bmob的android sdk包，包含了Bmob的数据存储、文件等服务
     compile 'cn.bmob.android:bmob-sdk:3.5.3'
     //环信SDK
     compile 'com.hyphenate:hyphenate-sdk:3.2.3'
-
-//    //友盟
-//    compile 'com.umeng.analytics:analytics:latest.integration'
+    //    //友盟
+    //    compile 'com.umeng.analytics:analytics:latest.integration'
     //butterknife
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
