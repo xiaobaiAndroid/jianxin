@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.bzf.jianxin.AppDatabaseHelper;
 import com.bzf.jianxin.base.BaseCallbackListener;
+import com.bzf.jianxin.base.BaseModel;
 import com.bzf.jianxin.bean.Contact;
 import com.bzf.jianxin.bean.User;
 import com.bzf.jianxin.bean.Users;
@@ -29,7 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class UserModelImpl implements UserModel {
+public class UserModelImpl extends BaseModel implements UserModel {
 
     private static final String TAG = UserModelImpl.class.getName();
 

@@ -27,12 +27,12 @@ public class SplashActivity extends AppCompatActivity implements LoginView{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mPresenter =  new SplashPresenterImpl();
+        mPresenter =  new SplashPresenterImpl(this);
         Users currentUser = mPresenter.getCurrentUser();
         if(currentUser==null){
             toLogin();
         }else{
-            mPresenter.auoLogin(this,currentUser);
+            mPresenter.auoLogin(currentUser);
         }
     }
 

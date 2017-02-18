@@ -2,11 +2,9 @@ package com.bzf.jianxin.chat.presenter;
 
 import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BasePresenter;
-import com.bzf.jianxin.chat.model.MessageModel;
 import com.bzf.jianxin.chat.model.MessageModelImpl;
 import com.bzf.jianxin.chat.model.SendMessageListener;
-import com.bzf.jianxin.chat.view.NewMsgView;
-import com.bzf.jianxin.chat.view.SendMsgView;
+import com.bzf.jianxin.chat.view.ChatView;
 import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
 
 /**
@@ -14,20 +12,17 @@ import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ChatPresenterImpl extends BasePresenter implements ChatPresenter{
+public class ChatPresenterImpl extends BasePresenter<ChatView,MessageModelImpl> implements ChatPresenter{
 
-    private MessageModel mMessageModel;
-
-    public ChatPresenterImpl(){
-        super();
-        mMessageModel = new MessageModelImpl();
+    public ChatPresenterImpl(ChatView view){
+        super(view,new MessageModelImpl());
     }
 
     @Override
-    public void sendTextMessage(final SendMsgView view, String content, String contactUsername) {
+    public void sendTextMessage( String content, String contactUsername) {
         view.showSendMsgDialog();
 
-        mMessageModel.sendTextMessage(content, contactUsername, new SendMessageListener() {
+        mModel.sendTextMessage(content, contactUsername, new SendMessageListener() {
             @Override
             public void onProgress(int progress, String status) {
                 view.showSendMsgProgress(progress);
@@ -68,12 +63,12 @@ public class ChatPresenterImpl extends BasePresenter implements ChatPresenter{
 
     @Override
     public void readHistoryMessage(String chatUserName,String startMsgId,int pagesize) {
-        mMessageModel.readHistoryMsg(chatUserName, startMsgId, pagesize);
+        mModel.readHistoryMsg(chatUserName, startMsgId, pagesize);
     }
 
     @Override
-    public void getNewMsg(final NewMsgView view, String contactUsername, String msgId) {
-        mMessageModel.getMsgById(contactUsername,msgId, new BaseCallbackListener<ChatItemListViewBean>() {
+    public void getNewMsg(String contactUsername, String msgId) {
+        mModel.getMsgById(contactUsername,msgId, new BaseCallbackListener<ChatItemListViewBean>() {
             @Override
             public void success(final ChatItemListViewBean chatItemListViewBean) {
                 if(mHandler!=null){

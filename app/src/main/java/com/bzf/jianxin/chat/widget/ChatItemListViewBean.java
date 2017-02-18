@@ -4,6 +4,16 @@ import android.graphics.Bitmap;
 
 public class ChatItemListViewBean {
 
+    /**
+     * 发送的消息类型
+     */
+    public static final int SEND_TYPE = 0;
+
+    /**
+     * 接收的消息类型
+     */
+    public static final int RECEIVER_TYPE = 1;
+
     private int type;
     private String text;
     private Bitmap icon;

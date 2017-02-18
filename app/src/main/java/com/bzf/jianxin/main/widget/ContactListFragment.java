@@ -46,7 +46,7 @@ public class ContactListFragment extends BaseFragment<ContactListPresenterImpl> 
     protected void init() {
         mRv_contacts.setHasFixedSize(true);
         mRv_contacts.setLayoutManager(new LinearLayoutManager(getContext()));
-        mPresenter = new ContactListPresenterImpl();
+        mPresenter = new ContactListPresenterImpl(this);
         setContacts();
         intiListener();
         getContactList();
@@ -74,7 +74,7 @@ public class ContactListFragment extends BaseFragment<ContactListPresenterImpl> 
 
     public void getContactList() {
         if (mPresenter != null) {
-            mPresenter.getContactList(this);
+            mPresenter.getContactList();
         }
     }
 

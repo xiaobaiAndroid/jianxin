@@ -1,6 +1,7 @@
 package com.bzf.jianxin.chat.model;
 
 import com.bzf.jianxin.base.BaseCallbackListener;
+import com.bzf.jianxin.base.BaseModel;
 import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
 import com.bzf.jianxin.commonutils.HuanXinTool;
 import com.bzf.jianxin.commonutils.LogTool;
@@ -14,7 +15,7 @@ import com.hyphenate.chat.EMTextMessageBody;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class MessageModelImpl implements MessageModel{
+public class MessageModelImpl extends BaseModel implements MessageModel{
     private static final String TAG = MessageModelImpl.class.getName();
 
     @Override
@@ -67,7 +68,7 @@ public class MessageModelImpl implements MessageModel{
                         EMTextMessageBody textBody = (EMTextMessageBody) body;
                         bean.setText(textBody.getMessage());
                     }
-                    bean.setType(0);
+                    bean.setType(ChatItemListViewBean.RECEIVER_TYPE);
                     listener.success(bean);
                 } catch (Exception e) {
                     e.printStackTrace();

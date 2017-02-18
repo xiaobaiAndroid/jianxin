@@ -3,10 +3,8 @@ package com.bzf.jianxin.main.presenter;
 import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BasePresenter;
 import com.bzf.jianxin.bean.Conversation;
-import com.bzf.jianxin.main.model.ConversationModel;
 import com.bzf.jianxin.main.model.ConversationModelImpl;
 import com.bzf.jianxin.main.view.ConversationListView;
-import com.bzf.jianxin.main.view.UpdateConversationListView;
 
 import java.util.List;
 
@@ -15,18 +13,16 @@ import java.util.List;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ConversationListPresenterImpl extends BasePresenter implements ConversationListPresenter {
+public class ConversationListPresenterImpl extends BasePresenter<ConversationListView,ConversationModelImpl> implements ConversationListPresenter {
 
-    private ConversationModel mConversationModel;
 
-    public ConversationListPresenterImpl() {
-        super();
-        mConversationModel = new ConversationModelImpl();
+    public ConversationListPresenterImpl(ConversationListView view) {
+        super(view,new ConversationModelImpl());
     }
 
     @Override
-    public void getConversationList(final ConversationListView view) {
-        mConversationModel.getConversationList(new BaseCallbackListener<List<Conversation>>() {
+    public void getConversationList() {
+        mModel.getConversationList(new BaseCallbackListener<List<Conversation>>() {
             @Override
             public void success(final List<Conversation> conversations) {
                 if(mHandler!=null){
@@ -54,8 +50,8 @@ public class ConversationListPresenterImpl extends BasePresenter implements Conv
     }
 
     @Override
-    public void getUpdateConversationList(final UpdateConversationListView view) {
-        mConversationModel.getUpdateConversationList( new BaseCallbackListener<List<Conversation>>() {
+    public void getUpdateConversationList() {
+        mModel.getUpdateConversationList( new BaseCallbackListener<List<Conversation>>() {
             @Override
             public void success(final List<Conversation> conversations) {
                 if(mHandler!=null){
@@ -84,7 +80,7 @@ public class ConversationListPresenterImpl extends BasePresenter implements Conv
 
     @Override
     public void setIsRead(Conversation conversation) {
-        mConversationModel.setIsRead(conversation);
+        mModel.setIsRead(conversation);
     }
 
 

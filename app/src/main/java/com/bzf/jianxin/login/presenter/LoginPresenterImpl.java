@@ -3,7 +3,6 @@ package com.bzf.jianxin.login.presenter;
 import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BasePresenter;
 import com.bzf.jianxin.bean.User;
-import com.bzf.jianxin.login.module.UserModel;
 import com.bzf.jianxin.login.module.UserModelImpl;
 import com.bzf.jianxin.login.view.LoginView;
 
@@ -12,21 +11,18 @@ import com.bzf.jianxin.login.view.LoginView;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class LoginPresenterImpl extends BasePresenter implements LoginPresenter{
+public class LoginPresenterImpl extends BasePresenter<LoginView,UserModelImpl> implements LoginPresenter{
 
 
-    private UserModel mUserModel;
-
-    public LoginPresenterImpl() {
-        super();
-        mUserModel = new UserModelImpl();
+    public LoginPresenterImpl(LoginView view) {
+        super(view,new UserModelImpl());
     }
 
     @Override
-    public void login(final LoginView view, String userName, String psw) {
+    public void login(String userName, String psw) {
 
         view.showLoginDialog();
-        mUserModel.login(userName, psw, new BaseCallbackListener<User>() {
+        mModel.login(userName, psw, new BaseCallbackListener<User>() {
             @Override
             public void success(final User user) {
                 if(mHandler!=null){

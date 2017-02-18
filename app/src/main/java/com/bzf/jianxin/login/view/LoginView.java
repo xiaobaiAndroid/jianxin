@@ -1,5 +1,6 @@
 package com.bzf.jianxin.login.view;
 
+import com.bzf.jianxin.base.BaseView;
 import com.bzf.jianxin.bean.User;
 
 /**
@@ -8,7 +9,7 @@ import com.bzf.jianxin.bean.User;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public interface LoginView {
+public interface LoginView extends BaseView{
     void showLoginDialog();
     void closeLoginDialog();
     void loginSucess(User user);

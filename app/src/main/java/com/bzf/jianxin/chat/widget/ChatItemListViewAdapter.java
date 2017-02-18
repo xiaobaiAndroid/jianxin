@@ -53,7 +53,7 @@ public class ChatItemListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            if (getItemViewType(position) == 0) {
+            if (getItemViewType(position) == 1) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(
                         R.layout.chat_item_itemin, null);

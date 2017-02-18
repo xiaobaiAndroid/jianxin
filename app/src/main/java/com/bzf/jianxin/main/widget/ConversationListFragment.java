@@ -17,7 +17,6 @@ import com.bzf.jianxin.commonutils.LogTool;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.main.presenter.ConversationListPresenterImpl;
 import com.bzf.jianxin.main.view.ConversationListView;
-import com.bzf.jianxin.main.view.UpdateConversationListView;
 import com.bzf.jianxin.service.MessageDisposeManger;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import butterknife.BindView;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ConversationListFragment extends BaseFragment<ConversationListPresenterImpl> implements ConversationListView,UpdateConversationListView {
+public class ConversationListFragment extends BaseFragment<ConversationListPresenterImpl> implements ConversationListView {
 
     @BindView(R.id.mRv_Conversation)
     RecyclerView mRvConversation;
@@ -47,7 +46,7 @@ public class ConversationListFragment extends BaseFragment<ConversationListPrese
 
     @Override
     protected void init() {
-        mPresenter = new ConversationListPresenterImpl();
+        mPresenter = new ConversationListPresenterImpl(this);
         mList = new ArrayList<>();
         mAdapter = new ConversationAdapter(mList);
         initListener();
@@ -55,7 +54,7 @@ public class ConversationListFragment extends BaseFragment<ConversationListPrese
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRvConversation.setLayoutManager(linearLayoutManager);
         mRvConversation.setAdapter(mAdapter);
-        mPresenter.getConversationList(this);
+        mPresenter.getConversationList();
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
         mLocalBroadcastManager.registerReceiver(mBroadcastReceiver,new IntentFilter(MessageDisposeManger.ACTION_UPDATE_CONVERSATION));
     }
@@ -102,7 +101,7 @@ public class ConversationListFragment extends BaseFragment<ConversationListPrese
         public void onReceive(Context context, Intent intent) {
             try {
                     //有新消息，更新会话列表。
-                mPresenter.getUpdateConversationList(ConversationListFragment.this);
+                mPresenter.getUpdateConversationList();
             } catch (Exception e) {
                 e.printStackTrace();
             }

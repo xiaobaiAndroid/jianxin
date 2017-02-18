@@ -1,7 +1,5 @@
 package com.bzf.jianxin.login.presenter;
 
-import com.bzf.jianxin.login.view.LoginView;
-
 /**
  * com.bzf.jianxin.login.presenter
  * Author: baizhengfu
@@ -14,5 +12,5 @@ public interface LoginPresenter{
      * @param userName
      * @param psw
      */
-    void login(LoginView view,String userName, String psw);
+    void login(String userName, String psw);
 }

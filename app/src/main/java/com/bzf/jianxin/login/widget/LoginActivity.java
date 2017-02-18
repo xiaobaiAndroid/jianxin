@@ -16,6 +16,7 @@ import com.bzf.jianxin.MyApplication;
 import com.bzf.jianxin.R;
 import com.bzf.jianxin.base.BaseActivity;
 import com.bzf.jianxin.bean.User;
+import com.bzf.jianxin.commonutils.LogTool;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.login.presenter.LoginPresenterImpl;
 import com.bzf.jianxin.login.view.LoginView;
@@ -53,10 +54,17 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
 
     @Override
     protected void init() {
-        mPresenter = new LoginPresenterImpl();
+        mPresenter = new LoginPresenterImpl(this);
         initView();
         initListener();
         initData();
+//        mPresenter.testOOM(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogTool.i("bzf",LoginActivity.class.getName()+"-----onDestroy（）");
     }
 
     @Override
@@ -168,7 +176,7 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
                 if(mPresenter!=null){
                     String userName = mEt_username.getText().toString().trim();
                     String psw = mEt_psw.getText().toString().trim();
-                    mPresenter.login(LoginActivity.this,userName,psw);
+                    mPresenter.login(userName,psw);
                 }
             }
         });

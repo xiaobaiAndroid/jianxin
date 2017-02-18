@@ -4,7 +4,6 @@ import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BasePresenter;
 import com.bzf.jianxin.bean.User;
 import com.bzf.jianxin.bean.Users;
-import com.bzf.jianxin.login.module.UserModel;
 import com.bzf.jianxin.login.module.UserModelImpl;
 import com.bzf.jianxin.login.view.LoginView;
 
@@ -13,23 +12,21 @@ import com.bzf.jianxin.login.view.LoginView;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class SplashPresenterImpl extends BasePresenter implements SplashPresenter{
-    private UserModel mUserModel;
+public class SplashPresenterImpl extends BasePresenter<LoginView,UserModelImpl> implements SplashPresenter{
 
-    public SplashPresenterImpl(){
-        super();
-        mUserModel = new UserModelImpl();
+    public SplashPresenterImpl(LoginView view){
+        super(view,new UserModelImpl());
     }
 
     @Override
     public Users getCurrentUser() {
-        return mUserModel.getCurrentUser();
+        return mModel.getCurrentUser();
     }
 
     @Override
-    public void auoLogin(final LoginView view, Users currentUser) {
+    public void auoLogin(Users currentUser) {
 
-        mUserModel.login(currentUser.getUsername(), currentUser.getPsw(), new BaseCallbackListener<User>() {
+        mModel.login(currentUser.getUsername(), currentUser.getPsw(), new BaseCallbackListener<User>() {
             @Override
             public void success(final User user) {
                 if(mHandler!=null){

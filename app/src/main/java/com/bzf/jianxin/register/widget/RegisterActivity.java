@@ -29,14 +29,13 @@ import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.login.widget.LoginActivity;
 import com.bzf.jianxin.register.presenter.RegistePresenterImpl;
 import com.bzf.jianxin.register.view.RegisterView;
-import com.bzf.jianxin.register.view.UploadAvatarView;
 
 import java.io.File;
 import java.util.Date;
 
 import butterknife.BindView;
 
-public class RegisterActivity extends BaseActivity<RegistePresenterImpl> implements RegisterView,UploadAvatarView {
+public class RegisterActivity extends BaseActivity<RegistePresenterImpl> implements RegisterView{
 
     @BindView(R.id.et_username)
     EditText mEt_username;
@@ -91,7 +90,7 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
 
     @Override
     protected void init() {
-        mPresenter = new RegistePresenterImpl();
+        mPresenter = new RegistePresenterImpl(this);
         initView();
         initListener();
     }
@@ -365,7 +364,7 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
     @Override
     public void registerSuccess(User user) {
         mUser = user;
-        mPresenter.uploadAvatar(this,mOutputImageFile,user.getUsername());
+        mPresenter.uploadAvatar(mOutputImageFile,user.getUsername());
     }
 
 
@@ -396,9 +395,6 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
         toLogin();
     }
 
-    @Override
-    public void showUpdateAvatarDialog() {
-    }
 
     @Override
     public void closeUpdateAvatarDialog() {

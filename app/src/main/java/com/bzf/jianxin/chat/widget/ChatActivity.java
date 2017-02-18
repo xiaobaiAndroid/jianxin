@@ -19,20 +19,17 @@ import com.bzf.jianxin.R;
 import com.bzf.jianxin.base.BaseActivity;
 import com.bzf.jianxin.bean.Contact;
 import com.bzf.jianxin.chat.presenter.ChatPresenterImpl;
-import com.bzf.jianxin.chat.view.HistoryMsgView;
-import com.bzf.jianxin.chat.view.NewMsgView;
-import com.bzf.jianxin.chat.view.SendMsgView;
+import com.bzf.jianxin.chat.view.ChatView;
 import com.bzf.jianxin.commonutils.LogTool;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.service.MessageDisposeManger;
-import com.hyphenate.chat.EMMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements SendMsgView,HistoryMsgView,NewMsgView{
+public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements ChatView{
 
     private static final String TAG = ChatActivity.class.getName();
 
@@ -50,7 +47,7 @@ public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements Sen
 
     @Override
     protected void init() {
-        mPresenter = new ChatPresenterImpl();
+        mPresenter = new ChatPresenterImpl(this);
         initView();
         initListener();
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
@@ -95,11 +92,11 @@ public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements Sen
                 if (!TextUtils.isEmpty(content) && mContact != null) {
                     mEt_content.setText("");
                     ChatItemListViewBean bean = new ChatItemListViewBean();
-                    bean.setType(0);
+                    bean.setType(ChatItemListViewBean.SEND_TYPE);
                     bean.setText(content);
                     mChatList.add(bean);
                     mChatAdapter.notifyDataSetChanged();
-                     mPresenter.sendTextMessage(ChatActivity.this,content, mContact.getContactUsername());
+                     mPresenter.sendTextMessage(content, mContact.getContactUsername());
                     mLv_chatList.setSelection(mLv_chatList.getCount());
                 }
             }
@@ -139,7 +136,7 @@ public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements Sen
                 Bundle bundle = intent.getExtras();
                 String msgId = bundle.getString("msgId");
                 if(!TextUtils.isEmpty(msgId)){
-                    mPresenter.getNewMsg(ChatActivity.this,mContact.getContactUsername(),msgId);
+                    mPresenter.getNewMsg(mContact.getContactUsername(),msgId);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -147,25 +144,6 @@ public class ChatActivity extends BaseActivity<ChatPresenterImpl> implements Sen
         }
     };
 
-    @Override
-    public void showHistoryMsg(List<EMMessage> msgList) {
-
-    }
-
-    @Override
-    public void failLoadHistoryMsg(String msg) {
-
-    }
-
-    @Override
-    public void showHistoryMsgDialog() {
-
-    }
-
-    @Override
-    public void dismissHistoryMsgDialog() {
-
-    }
 
     @Override
     public void sendSuccess() {

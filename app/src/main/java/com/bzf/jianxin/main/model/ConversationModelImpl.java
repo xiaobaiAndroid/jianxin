@@ -1,6 +1,7 @@
 package com.bzf.jianxin.main.model;
 
 import com.bzf.jianxin.base.BaseCallbackListener;
+import com.bzf.jianxin.base.BaseModel;
 import com.bzf.jianxin.bean.Conversation;
 import com.bzf.jianxin.bean.Users;
 import com.bzf.jianxin.login.module.UserModelImpl;
@@ -12,7 +13,7 @@ import java.util.List;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ConversationModelImpl implements ConversationModel{
+public class ConversationModelImpl extends BaseModel implements ConversationModel{
 
     private static final String TAG = ConversationModelImpl.class.getName();
 

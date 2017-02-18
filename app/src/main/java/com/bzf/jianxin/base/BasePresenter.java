@@ -3,14 +3,20 @@ package com.bzf.jianxin.base;
 import android.os.Handler;
 
 /**
+ * Presenter基类
  * com.bzf.jianxin.base
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class BasePresenter {
-    protected Handler mHandler;
+public class BasePresenter<T extends BaseView,V extends BaseModel> {
 
-    public BasePresenter(){
+    protected Handler mHandler;
+    protected T view;
+    protected V mModel;
+
+    public BasePresenter(T view,V model){
+        this.view = view;
+        mModel = model;
         mHandler = new Handler();
     }
 
@@ -19,6 +25,7 @@ public class BasePresenter {
      */
     public void detach(){
         mHandler = null;
+        view = null;
     };
 
 }

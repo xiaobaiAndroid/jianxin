@@ -1,7 +1,6 @@
 package com.bzf.jianxin.login.presenter;
 
 import com.bzf.jianxin.bean.Users;
-import com.bzf.jianxin.login.view.LoginView;
 
 /**
  * com.bzf.jianxin.login.presenter
@@ -20,5 +19,5 @@ public interface SplashPresenter{
      * 自动登录
      * @param currentUser
      */
-    void auoLogin(LoginView view,Users currentUser);
+    void auoLogin(Users currentUser);
 }

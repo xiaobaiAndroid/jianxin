@@ -31,7 +31,7 @@ public class AddContactActivity extends BaseActivity<AddContactPresenterImpl> im
 
     @Override
     protected void init() {
-        mPresenter = new AddContactPresenterImpl();
+        mPresenter = new AddContactPresenterImpl(this);
         initToolbar("添加朋友");
         initSearchView();
         initData();
@@ -80,7 +80,7 @@ public class AddContactActivity extends BaseActivity<AddContactPresenterImpl> im
         if(TextUtils.isEmpty(username)){
             return;
         }
-        mPresenter.queryUser(this,username);
+        mPresenter.queryUser(username);
     }
 
     @Override

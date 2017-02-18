@@ -33,6 +33,7 @@ public class MyApplication extends Application {
      */
     public String mCurrentChatUserName;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

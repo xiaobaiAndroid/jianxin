@@ -7,10 +7,8 @@ import com.bzf.jianxin.base.BasePresenter;
 import com.bzf.jianxin.bean.User;
 import com.bzf.jianxin.commonutils.BitmapTool;
 import com.bzf.jianxin.commonutils.FileTool;
-import com.bzf.jianxin.login.module.UserModel;
 import com.bzf.jianxin.login.module.UserModelImpl;
 import com.bzf.jianxin.register.view.RegisterView;
-import com.bzf.jianxin.register.view.UploadAvatarView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,12 +18,10 @@ import java.io.FileOutputStream;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class RegistePresenterImpl extends BasePresenter implements RegisterPresenter{
-    private UserModel mUserModel;
+public class RegistePresenterImpl extends BasePresenter<RegisterView,UserModelImpl> implements RegisterPresenter{
 
-    public RegistePresenterImpl(){
-        super();
-        mUserModel = new UserModelImpl();
+    public RegistePresenterImpl(RegisterView view){
+        super(view,new UserModelImpl());
     }
 
 
@@ -37,7 +33,7 @@ public class RegistePresenterImpl extends BasePresenter implements RegisterPrese
             view.registerFail("密码太短，请输入大于6位数的密码");
         }else{
             view.showRegisterDialog();
-            mUserModel.register(username, psw,nickName,new BaseCallbackListener<User>(){
+            mModel.register(username, psw,nickName,new BaseCallbackListener<User>(){
 
                 @Override
                 public void success(final User user) {
@@ -80,15 +76,14 @@ public class RegistePresenterImpl extends BasePresenter implements RegisterPrese
     }
 
     @Override
-    public void uploadAvatar(final UploadAvatarView view, File file, String username) {
-        mUserModel.updateUserAvatar(file, username, new BaseCallbackListener<String>() {
+    public void uploadAvatar(File file, String username) {
+        mModel.updateUserAvatar(file, username, new BaseCallbackListener<String>() {
             @Override
             public void success(String s) {
                 if(mHandler!=null){
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            view.closeUpdateAvatarDialog();
                             view.uploadAvatarSuccess();
                         }
                     });
@@ -101,7 +96,6 @@ public class RegistePresenterImpl extends BasePresenter implements RegisterPrese
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            view.closeUpdateAvatarDialog();
                             view.uploadAvatartFail(e.getMessage());
                         }
                     });

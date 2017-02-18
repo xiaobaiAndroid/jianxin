@@ -11,17 +11,16 @@ import com.bzf.jianxin.set.view.ExitLoginView;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class SetPresenterImpl extends BasePresenter implements SetPresenter{
+public class SetPresenterImpl extends BasePresenter<ExitLoginView,UserModelImpl> implements SetPresenter{
 
     private UserModel mUserModel;
 
-    public SetPresenterImpl() {
-        super();
-        mUserModel = new UserModelImpl();
+    public SetPresenterImpl(ExitLoginView view) {
+        super(view,new UserModelImpl());
     }
 
     @Override
-    public void exitLogin(final ExitLoginView view) {
+    public void exitLogin() {
         mUserModel.exitLogin(new BaseCallbackListener<String>() {
             @Override
             public void success(String s) {

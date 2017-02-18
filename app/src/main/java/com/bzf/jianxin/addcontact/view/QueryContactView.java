@@ -1,5 +1,6 @@
 package com.bzf.jianxin.addcontact.view;
 
+import com.bzf.jianxin.base.BaseView;
 import com.bzf.jianxin.bean.User;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public interface QueryContactView {
+public interface QueryContactView extends BaseView{
 
     void queryContactSuccess(List<User> list);
     void queryContactFail(String msg);

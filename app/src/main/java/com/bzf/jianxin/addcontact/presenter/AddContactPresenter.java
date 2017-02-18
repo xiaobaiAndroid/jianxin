@@ -1,7 +1,5 @@
 package com.bzf.jianxin.addcontact.presenter;
 
-import com.bzf.jianxin.addcontact.view.QueryContactView;
-
 /**
  * com.bzf.jianxin.addcontact.presenter
  * Author: baizhengfu
@@ -11,10 +9,9 @@ public interface AddContactPresenter {
 
     /**
      * 根据用户名查询用户
-     * @param view
      * @param username
      */
-    void queryUser(QueryContactView view,String username);
+    void queryUser(String username);
 
     /**
      * 请求添加好友

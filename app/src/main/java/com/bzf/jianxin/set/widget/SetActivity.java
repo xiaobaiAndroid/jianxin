@@ -22,7 +22,7 @@ public class SetActivity extends BaseActivity<SetPresenterImpl> implements ExitL
 
     @Override
     protected void init() {
-        mPresenter = new SetPresenterImpl();
+        mPresenter = new SetPresenterImpl(this);
         initToolbar("设置");
         initListener();
     }
@@ -31,7 +31,7 @@ public class SetActivity extends BaseActivity<SetPresenterImpl> implements ExitL
         mTvEixt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.exitLogin(SetActivity.this);
+                mPresenter.exitLogin();
             }
         });
     }

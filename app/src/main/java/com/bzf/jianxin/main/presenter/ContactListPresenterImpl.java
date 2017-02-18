@@ -13,18 +13,15 @@ import java.util.List;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ContactListPresenterImpl extends BasePresenter implements ContactListPresenter {
+public class ContactListPresenterImpl extends BasePresenter<ContactListView,UserModelImpl> implements ContactListPresenter {
 
-    private UserModelImpl mUserModel;
-
-    public ContactListPresenterImpl(){
-        super();
-        mUserModel = new UserModelImpl();
+    public ContactListPresenterImpl(ContactListView view){
+        super(view,new UserModelImpl());
     }
 
     @Override
-    public void getContactList(final ContactListView view) {
-        mUserModel.getContactList(new BaseCallbackListener<List<Contact>>() {
+    public void getContactList() {
+        mModel.getContactList(new BaseCallbackListener<List<Contact>>() {
             @Override
             public void success(final List<Contact> contacts) {
                 if(mHandler!=null){

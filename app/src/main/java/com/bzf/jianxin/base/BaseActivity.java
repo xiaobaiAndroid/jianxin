@@ -60,6 +60,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     protected abstract void init();
 
+    /**
+     * 设置Activity布局
+     * @param savedInstanceState
+     */
     protected abstract void createContentView(Bundle savedInstanceState);
 
     @Override

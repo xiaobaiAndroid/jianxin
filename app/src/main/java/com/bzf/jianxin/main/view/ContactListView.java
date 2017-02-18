@@ -1,5 +1,6 @@
 package com.bzf.jianxin.main.view;
 
+import com.bzf.jianxin.base.BaseView;
 import com.bzf.jianxin.bean.Contact;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public interface ContactListView {
+public interface ContactListView extends BaseView{
     void contactListSuccess(List<Contact> contacts);
     void contactListfail(String msg);
 
