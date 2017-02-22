@@ -27,12 +27,19 @@ public interface UserModel {
      * 获取当前登录用户
      * @return
      */
-    Users getCurrentUser();
+    Users getCurrentLoginUser();
+
+    /**
+     * 获取当前登录用户的User对象
+     * @return
+     */
+    User getCurrentUser();
+
 
     /**
      * 退出登录
      */
-    void exitLogin(BaseCallbackListener<String> listener);
+    void exitLogin();
 
     /**
      * 查找用户

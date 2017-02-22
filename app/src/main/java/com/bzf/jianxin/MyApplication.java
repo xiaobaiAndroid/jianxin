@@ -1,5 +1,6 @@
 package com.bzf.jianxin;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.bzf.jianxin.bean.Users;
@@ -8,6 +9,11 @@ import com.bzf.jianxin.commonutils.BmobTool;
 import com.bzf.jianxin.commonutils.HuanXinTool;
 import com.bzf.jianxin.commonutils.LogTool;
 import com.bzf.jianxin.login.module.UserModelImpl;
+import com.facebook.drawee.backends.pipeline.Fresco;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * com.bzf.jianxin
@@ -33,6 +39,9 @@ public class MyApplication extends Application {
      */
     public String mCurrentChatUserName;
 
+    private List<WeakReference<Activity>> activitys;
+
+
 
     @Override
     public void onCreate() {
@@ -42,8 +51,11 @@ public class MyApplication extends Application {
             LogTool.i(MyApplication.class.getName(),"onCreate---");
             HuanXinTool.init(this);
             BmobTool.init(this);
+            //初始化Fresco
+            Fresco.initialize(this);
             mShowNewMessage = true;
             mCurrentChatUserName = "";
+            activitys = new ArrayList<>();
         }
         initCurrentUser();
     }
@@ -61,8 +73,24 @@ public class MyApplication extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mCurrentUser = new UserModelImpl().getCurrentUser();
+                mCurrentUser = new UserModelImpl().getCurrentLoginUser();
             }
         });
+    }
+
+    public void addActivity(Activity activity){
+        activitys.add(new WeakReference<Activity>(activity));
+    }
+
+    public void exitApp(){
+        for(WeakReference<Activity> wr : activitys){
+            if(wr!=null){
+                Activity activity = wr.get();
+                if(activity!=null || !activity.isFinishing()){
+                    activity.finish();
+                }
+            }
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

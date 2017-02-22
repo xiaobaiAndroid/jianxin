@@ -1,6 +1,5 @@
 package com.bzf.jianxin.chat.model;
 
-import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
 
 /**
@@ -32,7 +31,7 @@ public interface MessageModel {
      * 根据Id获取消息
      * @param contactUsername
      * @param msgId
-     * @param listener
+     * @return
      */
-    void getMsgById(String contactUsername, String msgId, BaseCallbackListener<ChatItemListViewBean> listener);
+    ChatItemListViewBean getMsgById(String contactUsername, String msgId)throws Exception;
 }

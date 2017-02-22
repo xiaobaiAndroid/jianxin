@@ -2,8 +2,6 @@ package com.bzf.jianxin.main.widget;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.indexablerv.IndexableAdapter;
+import me.yokeyword.indexablerv.IndexableLayout;
 
 /**
  * 通讯录
@@ -30,8 +30,9 @@ import butterknife.ButterKnife;
  */
 public class ContactListFragment extends BaseFragment<ContactListPresenterImpl> implements ContactListView {
 
-    @BindView(R.id.rv_contacts)
-    RecyclerView mRv_contacts;
+    @BindView(R.id.il_contacts)
+    IndexableLayout mIl_contacts;
+
 
     private ContactsAdapter mContactsAdapter;
     private List<Contact> mList = new ArrayList<Contact>();
@@ -44,31 +45,32 @@ public class ContactListFragment extends BaseFragment<ContactListPresenterImpl> 
 
     @Override
     protected void init() {
-        mRv_contacts.setHasFixedSize(true);
-        mRv_contacts.setLayoutManager(new LinearLayoutManager(getContext()));
         mPresenter = new ContactListPresenterImpl(this);
+        mIl_contacts.setOverlayStyle_MaterialDesign(getResources().getColor(R.color.colorPrimary));
+        mIl_contacts.setCompareMode(IndexableLayout.MODE_FAST);//设置排序规则
         setContacts();
         intiListener();
         getContactList();
     }
 
     private void intiListener() {
-        mContactsAdapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
+        mContactsAdapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<Contact>() {
             @Override
-            public void OnItemListener(View view, int position) {
+            public void onItemClick(View v, int originalPosition, int currentPosition, Contact entity) {
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.putExtra("contact", mList.get(position));
+                intent.putExtra("contact", entity);
                 startActivity(intent);
             }
         });
+
     }
 
     private void setContacts() {
         if (mContactsAdapter == null) {
-            mContactsAdapter = new ContactsAdapter(mList);
-            mRv_contacts.setAdapter(mContactsAdapter);
+            mContactsAdapter = new ContactsAdapter(getContext());
+            mIl_contacts.setAdapter(mContactsAdapter);
         } else {
-            mContactsAdapter.notifyDataSetChanged();
+            mContactsAdapter.setDatas(mList);
         }
     }
 

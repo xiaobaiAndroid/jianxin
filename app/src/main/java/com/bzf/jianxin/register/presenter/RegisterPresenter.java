@@ -1,8 +1,9 @@
 package com.bzf.jianxin.register.presenter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-
-import com.bzf.jianxin.register.view.RegisterView;
+import android.net.Uri;
 
 import java.io.File;
 
@@ -13,7 +14,7 @@ import java.io.File;
  */
 public interface RegisterPresenter{
 
-    void register(RegisterView view, String username, String psw, String nickName);
+    void register(String username, String psw, String nickName);
 
     /**
      * 保存头像
@@ -29,4 +30,16 @@ public interface RegisterPresenter{
      * @param username
      */
     void uploadAvatar(File file, String username);
+
+    /**
+     * 穿件保存头像的File对象
+     */
+    void createSaveImageFile(Context context)throws Exception;
+
+    /**
+     * 设置裁剪图片Intent参数
+     * @param uri
+     * @throws Exception
+     */
+    Intent getPhotoZoomIntent(Uri uri)throws Exception;
 }

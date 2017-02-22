@@ -8,6 +8,8 @@ import com.bzf.jianxin.login.module.UserModelImpl;
 
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+
 /**
  * com.bzf.jianxin.addcontact.presenter
  * Author: baizhengfu
@@ -25,28 +27,24 @@ public class AddContactPresenterImpl extends BasePresenter<QueryContactView,User
         mModel.queryUser(username, new BaseCallbackListener<List<User>>() {
             @Override
             public void success(final List<User> userList) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.closeQueryContactDialog();
-                            view.queryContactSuccess(userList);
-                        }
-                    });
-                }
+                asyncRequest(userList, new Consumer<List<User>>() {
+                    @Override
+                    public void accept(List<User> users) throws Exception {
+                        view.closeQueryContactDialog();
+                        view.queryContactSuccess(userList);
+                    }
+                });
             }
 
             @Override
             public void fail(final Throwable e) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.closeQueryContactDialog();
-                            view.queryContactFail(e.getMessage());
-                        }
-                    });
-                }
+                asyncRequest(e.getMessage(), new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        view.closeQueryContactDialog();
+                        view.queryContactFail(e.getMessage());
+                    }
+                });
             }
         });
     }

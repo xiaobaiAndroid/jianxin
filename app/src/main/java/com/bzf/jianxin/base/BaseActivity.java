@@ -1,8 +1,11 @@
 package com.bzf.jianxin.base;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -30,6 +33,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createContentView(savedInstanceState);
+        MyApplication.getIns().addActivity(this);
         showNewMessageToNotification();
         ButterKnife.bind(this);
         init();
@@ -80,6 +84,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             onBackPressed();
         }
         return true;
+    }
+
+    /**
+     * 统一跳转动画
+     * @param intent
+     */
+    public void startOtherActivity(Intent intent) {
+        overridePendingTransition(R.anim.activity_in,R.anim.activity_out);
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.activity_in, R.anim.activity_out);
+        ActivityCompat.startActivity(this,intent,compat.toBundle());
     }
 
 }

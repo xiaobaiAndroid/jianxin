@@ -38,7 +38,6 @@ public class SplashActivity extends AppCompatActivity implements LoginView{
 
     private void toLogin() {
         startActivity(new Intent(this,LoginActivity.class));
-        finish();
     }
 
     @Override
@@ -56,7 +55,6 @@ public class SplashActivity extends AppCompatActivity implements LoginView{
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("user",user);
         startActivity(intent);
-        finish();
     }
 
     @Override

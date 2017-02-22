@@ -1,25 +1,29 @@
 package com.bzf.jianxin.chat.presenter;
 
-import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BasePresenter;
 import com.bzf.jianxin.chat.model.MessageModelImpl;
 import com.bzf.jianxin.chat.model.SendMessageListener;
 import com.bzf.jianxin.chat.view.ChatView;
 import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
 
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
+
 /**
  * com.bzf.jianxin.chat.presenter
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class ChatPresenterImpl extends BasePresenter<ChatView,MessageModelImpl> implements ChatPresenter{
+public class ChatPresenterImpl extends BasePresenter<ChatView, MessageModelImpl> implements ChatPresenter {
 
-    public ChatPresenterImpl(ChatView view){
-        super(view,new MessageModelImpl());
+    public ChatPresenterImpl(ChatView view) {
+        super(view, new MessageModelImpl());
     }
 
     @Override
-    public void sendTextMessage( String content, String contactUsername) {
+    public void sendTextMessage(String content, String contactUsername) {
         view.showSendMsgDialog();
 
         mModel.sendTextMessage(content, contactUsername, new SendMessageListener() {
@@ -30,28 +34,24 @@ public class ChatPresenterImpl extends BasePresenter<ChatView,MessageModelImpl> 
 
             @Override
             public void success(final String s) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.dimissSendMsgDialog();
-                            view.sendSuccess();
-                        }
-                    });
-                }
+                asyncRequest(s,new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        view.dimissSendMsgDialog();
+                        view.sendSuccess();
+                    }
+                });
             }
 
             @Override
             public void fail(final Throwable e) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.dimissSendMsgDialog();
-                            view.sendFail(e.getMessage());
-                        }
-                    });
-                }
+                asyncRequest(e.getMessage(),new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        view.dimissSendMsgDialog();
+                        view.sendFail(s);
+                    }
+                });
             }
         });
     }
@@ -62,36 +62,35 @@ public class ChatPresenterImpl extends BasePresenter<ChatView,MessageModelImpl> 
     }
 
     @Override
-    public void readHistoryMessage(String chatUserName,String startMsgId,int pagesize) {
+    public void readHistoryMessage(String chatUserName, String startMsgId, int pagesize) {
         mModel.readHistoryMsg(chatUserName, startMsgId, pagesize);
     }
 
     @Override
-    public void getNewMsg(String contactUsername, String msgId) {
-        mModel.getMsgById(contactUsername,msgId, new BaseCallbackListener<ChatItemListViewBean>() {
+    public void getNewMsg(final String contactUsername, final String msgId) {
+        asyncRequest(new ObservableOnSubscribe<ChatItemListViewBean>() {
             @Override
-            public void success(final ChatItemListViewBean chatItemListViewBean) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.getNewMsgSuccess(chatItemListViewBean);
-                        }
-                    });
-                }
+            public void subscribe(ObservableEmitter<ChatItemListViewBean> observable) throws Exception {
+                ChatItemListViewBean bean = mModel.getMsgById(contactUsername, msgId);
+                observable.onNext(bean);
+            }
+        }, new DisposableObserver<ChatItemListViewBean>() {
+
+            @Override
+            public void onNext(ChatItemListViewBean bean) {
+                view.getNewMsgSuccess(bean);
             }
 
             @Override
-            public void fail(final Throwable e) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.getNewMsgFail(e.getMessage());
-                        }
-                    });
-                }
+            public void onError(Throwable e) {
+                view.getNewMsgFail(e.getMessage());
             }
+
+            @Override
+            public void onComplete() {
+
+            }
+
         });
     }
 

@@ -30,9 +30,9 @@
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/ActivityTheme">
+        android:theme="@style/AppTheme">
         <activity android:name=".login.widget.SplashActivity"
-            android:theme="@style/AppTheme"
+            android:theme="@style/LaunchTheme"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,8 +40,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.widget.MainActivity" />
-        <activity android:name=".login.widget.LoginActivity" />
+        <activity android:name=".main.widget.MainActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".login.widget.LoginActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
 
         <!-- 设置环信应用的AppKey -->
         <meta-data
@@ -69,11 +77,19 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".register.widget.RegisterActivity" />
+        <activity android:name=".register.widget.RegisterActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".chat.widget.ChatActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
              />
-        <activity android:name=".set.widget.SetActivity" />
+        <activity android:name=".set.widget.SetActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            />
 
         <service
             android:name=".service.MessageService"
@@ -81,7 +97,9 @@
             android:exported="true" />
 
         <activity android:name=".addcontact.widget.AddContactActivity"
-            android:theme="@style/ActivityTheme"
+            android:theme="@style/AppTheme"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 

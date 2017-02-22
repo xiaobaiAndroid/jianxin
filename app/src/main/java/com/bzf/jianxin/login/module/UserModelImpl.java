@@ -196,7 +196,7 @@ public class UserModelImpl extends BaseModel implements UserModel {
     }
 
     @Override
-    public Users getCurrentUser() {
+    public Users getCurrentLoginUser() {
         Users users = null;
         try {
             UsersDao dao = new UsersDao(AppDatabaseHelper.APP_DATABASE_NAME);
@@ -209,29 +209,17 @@ public class UserModelImpl extends BaseModel implements UserModel {
         return users;
     }
 
+    @Override
+    public User getCurrentUser() {
+        return BmobTool.getCurrentUser();
+    }
+
     //退出环信，再退出Bmob,最后到本地数据库Users表查找当前用户，把isCurrent标志改为不是当前用户，把psw置为null
     @Override
-    public void exitLogin(final BaseCallbackListener<String> listener) {
-        EMClient.getInstance().logout(true, new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                BmobUser.logOut();
-                updateUsers();
-                listener.success("退出登录成功");
-                LogTool.i(TAG, "退出登录成功");
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                listener.fail(new Throwable(s));
-                LogTool.i(TAG, "退出登录失败：" + s);
-            }
-
-            @Override
-            public void onProgress(int i, String s) {
-
-            }
-        });
+    public void exitLogin() {
+        EMClient.getInstance().logout(true);
+        BmobUser.logOut();
+        updateUsers();
     }
 
     @Override
@@ -273,21 +261,20 @@ public class UserModelImpl extends BaseModel implements UserModel {
             public void run() {
                 try {
                     final String imageName = "avatar_" + username + ".jpg";
-                    final File mAvatarFile = new File(imageFile.getParent(), imageName);
-                    imageFile.renameTo(mAvatarFile);
-                    imageFile.delete();
-                    BmobTool.uploadFile(mAvatarFile.getAbsolutePath(), new BaseCallbackListener<String>() {
+                    BmobTool.uploadFile(imageFile.getAbsolutePath(), new BaseCallbackListener<String>() {
                         @Override
                         public void success(String imageUrl) {
                             User user = new User();
                             user.setAvatarUrl(imageUrl);
                             user.setAvatarName(imageName);
                             updateUserTable(user,listener);
+                            imageFile.delete();
                         }
 
                         @Override
                         public void fail(Throwable e) {
                             listener.fail(e);
+                            imageFile.delete();
                         }
                     });
                 } catch (Exception e) {
@@ -303,13 +290,13 @@ public class UserModelImpl extends BaseModel implements UserModel {
      * @param user
      * @param listener
      */
-    private void updateUserTable(User user, final BaseCallbackListener<String> listener) {
+    private void updateUserTable(final User user, final BaseCallbackListener<String> listener) {
         User currentUser = BmobUser.getCurrentUser(User.class);
         user.update(currentUser.getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    listener.success("更新用户头像成功");
+                    listener.success(user.getAvatarUrl());
                 } else {
                     listener.fail(e);
                 }

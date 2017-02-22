@@ -21,6 +21,8 @@ public class MessageService extends Service {
 
     private static final String TAG = MessageService.class.getName();
 
+    private static final int MESSAGE_SERVICE_ID = 1080;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -30,8 +32,21 @@ public class MessageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        createForegroundService();
+
     }
+
+    /**
+     * 灰色保活,在Android7.0中失效
+     */
+//    private void createGrayForegroundService() {
+//        if(Build.VERSION.SDK_INT<18){
+//            startForeground(MESSAGE_SERVICE_ID,new Notification());
+//        }else{
+//            Intent intent = new Intent(this, GrayInnerService.class);
+//            startService(intent);
+//            startForeground(MESSAGE_SERVICE_ID,new Notification());
+//        }
+//    }
 
     /**
      * 创建前台服务
@@ -47,19 +62,21 @@ public class MessageService extends Service {
         builder.setAutoCancel(false);
         builder.setWhen(System.currentTimeMillis());
         Notification notification = builder.build();
-        startForeground(1,notification);
+        startForeground(MESSAGE_SERVICE_ID,notification);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
+            createForegroundService();
+
             LogTool.i(TAG, "onStartCommand-----mMessageListener==null: " + (mMessageListener == null));
             HuanXinTool.readMessageListener(mMessageListener);
             HuanXinTool.setContactListener(mEMContactListener);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Service.START_STICKY;
+        return Service.START_STICKY;//尝试重启的标志
     }
 
     @Override
@@ -190,5 +207,31 @@ public class MessageService extends Service {
             ContactStateDisposeManager.getInstance(getApplicationContext()).disposeDeclinedInvited(username);
         }
     };
+
+//
+//    /**
+//     * 给 API >= 18 的平台上用的灰色保活手段
+//     */
+//    public static class GrayInnerService extends Service{
+//
+//        @Nullable
+//        @Override
+//        public IBinder onBind(Intent intent) {
+//            return null;
+//        }
+//
+//        @Override
+//        public void onCreate() {
+//            super.onCreate();
+//        }
+//
+//        @Override
+//        public int onStartCommand(Intent intent, int flags, int startId) {
+//            startForeground(MESSAGE_SERVICE_ID,new Notification());
+//            stopSelf();
+//
+//            return super.onStartCommand(intent, flags, startId);
+//        }
+//    }
 
 }

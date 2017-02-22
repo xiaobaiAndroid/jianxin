@@ -1,6 +1,5 @@
 package com.bzf.jianxin.main.model;
 
-import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.bean.Conversation;
 
 import java.util.List;
@@ -15,15 +14,13 @@ public interface ConversationModel {
 
     /**
      * 获取所有会话列表
-     * @param listener
      */
-   void getConversationList(BaseCallbackListener<List<Conversation>> listener);
+    List<Conversation> getConversationList()throws Exception;
 
     /**
      * 更新会话列表
-     * @param baseCallbackListener
      */
-    void getUpdateConversationList(BaseCallbackListener<List<Conversation>> baseCallbackListener);
+    List<Conversation> getUpdateConversationList()throws Exception;
 
     /**
      * 把指定会话设置成已读

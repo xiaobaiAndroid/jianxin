@@ -67,19 +67,19 @@ public class ConversationListFragment extends BaseFragment<ConversationListPrese
     }
 
     private void initListener() {
-        mAdapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemListener(View view, int position) {
-                Conversation conversation = mList.get(position);
-                if(conversation!=null){
-                    if(conversation.getMessageType()==Conversation.MessageTypeEnum.SIMPLE_CHAT.ordinal()){
-                        //单聊
-                    }else{
-                        //群聊
-                    }
-                }
-            }
-        });
+//        mAdapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
+//            @Override
+//            public void OnItemListener(View view, int position) {
+//                Conversation conversation = mList.get(position);
+//                if(conversation!=null){
+//                    if(conversation.getMessageType()==Conversation.MessageTypeEnum.SIMPLE_CHAT.ordinal()){
+//                        //单聊
+//                    }else{
+//                        //群聊
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override

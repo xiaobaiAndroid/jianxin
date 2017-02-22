@@ -58,7 +58,12 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
         initView();
         initListener();
         initData();
-//        mPresenter.testOOM(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -198,12 +203,10 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
         mTv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                finish();
+                startOtherActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
-
 
 
     /**
@@ -254,8 +257,7 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
         MyApplication.getIns().initCurrentUser();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("user",user);
-        startActivity(intent);
-        finish();
+        startOtherActivity(intent);
     }
 
     @Override

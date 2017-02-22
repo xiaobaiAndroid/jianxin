@@ -129,4 +129,12 @@ public class AppTool {
         return null;
     }
 
+    /**
+     * 获取Android系统的版本号
+     * @return
+     */
+    public static int getAndroidVersion(){
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
 }

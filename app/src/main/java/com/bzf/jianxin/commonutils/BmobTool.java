@@ -3,10 +3,12 @@ package com.bzf.jianxin.commonutils;
 import android.content.Context;
 
 import com.bzf.jianxin.base.BaseCallbackListener;
+import com.bzf.jianxin.bean.User;
 
 import java.io.File;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -57,4 +59,11 @@ public class BmobTool {
         }
     }
 
+    /**
+     * 获取当前的User对象
+     * @return
+     */
+    public static User getCurrentUser() {
+        return BmobUser.getCurrentUser(User.class);
+    }
 }

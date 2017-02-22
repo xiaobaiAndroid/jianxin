@@ -1,6 +1,7 @@
 package com.bzf.jianxin.bean;
 
 import cn.bmob.v3.BmobObject;
+import me.yokeyword.indexablerv.IndexableEntity;
 
 /**
  * 联系人bean
@@ -8,7 +9,7 @@ import cn.bmob.v3.BmobObject;
  * Author: baizhengfu
  * Email：709889312@qq.com
  */
-public class Contact extends BmobObject{
+public class Contact extends BmobObject implements IndexableEntity{
 
     /**
      * 用户的账号 作为查询所有联系人的条件
@@ -112,5 +113,20 @@ public class Contact extends BmobObject{
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    @Override
+    public String getFieldIndexBy() {
+        return contactUsername;
+    }
+
+    @Override
+    public void setFieldIndexBy(String indexField) {
+        contactUsername = indexField;
+    }
+
+    @Override
+    public void setFieldPinyinIndexBy(String pinyin) {
+
     }
 }

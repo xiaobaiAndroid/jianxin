@@ -8,6 +8,8 @@ import com.bzf.jianxin.main.view.ContactListView;
 
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+
 /**
  * com.bzf.jianxin.main.presenter
  * Author: baizhengfu
@@ -24,26 +26,23 @@ public class ContactListPresenterImpl extends BasePresenter<ContactListView,User
         mModel.getContactList(new BaseCallbackListener<List<Contact>>() {
             @Override
             public void success(final List<Contact> contacts) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.contactListSuccess(contacts);
-                        }
-                    });
-                }
+                asyncRequest(contacts, new Consumer<List<Contact>>() {
+                    @Override
+                    public void accept(List<Contact> contacts) throws Exception {
+                        view.contactListSuccess(contacts);
+                    }
+                });
             }
 
             @Override
             public void fail(final Throwable e) {
-                if(mHandler!=null){
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.contactListfail("获取联系人列表失败："+e.getMessage());
-                        }
-                    });
-                }
+                String errorMsg = "get ContacctList fail "+e.getMessage();
+                asyncRequest(errorMsg, new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        view.contactListfail(s);
+                    }
+                });
             }
         });
     }

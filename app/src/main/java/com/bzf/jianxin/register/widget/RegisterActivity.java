@@ -22,20 +22,14 @@ import android.widget.TextView;
 import com.bzf.jianxin.R;
 import com.bzf.jianxin.base.BaseActivity;
 import com.bzf.jianxin.bean.User;
-import com.bzf.jianxin.commonutils.AppTool;
-import com.bzf.jianxin.commonutils.DateTool;
-import com.bzf.jianxin.commonutils.FileTool;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.login.widget.LoginActivity;
 import com.bzf.jianxin.register.presenter.RegistePresenterImpl;
 import com.bzf.jianxin.register.view.RegisterView;
 
-import java.io.File;
-import java.util.Date;
-
 import butterknife.BindView;
 
-public class RegisterActivity extends BaseActivity<RegistePresenterImpl> implements RegisterView{
+public class RegisterActivity extends BaseActivity<RegistePresenterImpl> implements RegisterView {
 
     @BindView(R.id.et_username)
     EditText mEt_username;
@@ -83,7 +77,6 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
      */
     private static final int CUTTING = 3;
     private Uri mImageUri;
-    private File mOutputImageFile;
     private User mUser;
     private ProgressDialog mProgressDialog;
 
@@ -189,12 +182,10 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
         mBt_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPresenter != null) {
-                    String userName = mEt_username.getText().toString().trim();
-                    String psw = mEt_psw.getText().toString().trim();
-                    String nickName = mEt_usernick.getText().toString().trim();
-                    mPresenter.register(RegisterActivity.this, userName, psw,nickName);
-                }
+                String userName = mEt_username.getText().toString().trim();
+                String psw = mEt_psw.getText().toString().trim();
+                String nickName = mEt_usernick.getText().toString().trim();
+                mPresenter.register(userName, psw, nickName);
             }
         });
 
@@ -230,16 +221,15 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = null;
-                mOutputImageFile = null;
                 try {
-                    createSaveImageFile();
+                    mPresenter.createSaveImageFile(getApplication());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 switch (which) {
                     case 0:
                         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        Uri uri = Uri.fromFile(mOutputImageFile);
+                        Uri uri = Uri.fromFile(mPresenter.mOutputImageFile);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                         startActivityForResult(intent, TAKE_PHOTO); // 启动相机程序
                         break;
@@ -255,13 +245,6 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
         builder.create().show();
     }
 
-    private void createSaveImageFile() throws Exception {
-        String packageName = AppTool.getPackageName(getApplicationContext());
-        String dirName = packageName.substring(packageName.lastIndexOf(".") + 1) + "/avatar";
-        File dir = FileTool.createDir(dirName);
-        String imagName = DateTool.fromateDate(new Date(), DateTool.PATTERN_1) + ".jpg";
-        mOutputImageFile = FileTool.createFile(dir.getAbsolutePath(), imagName);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -269,56 +252,42 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
         switch (requestCode) {
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    startPhotoZoom(Uri.fromFile(mOutputImageFile));
+                    try {
+                        Intent intent = mPresenter.getPhotoZoomIntent(Uri.fromFile(mPresenter.mOutputImageFile));
+                        startActivityForResult(intent, CUTTING);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case CROP_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    startPhotoZoom(data.getData());
+                    try {
+                        startActivityForResult(mPresenter.getPhotoZoomIntent(data.getData()), CUTTING);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case CUTTING:
                 if (resultCode == RESULT_OK) {
-                    setPicToView(data);
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+                        Bitmap photo = extras.getParcelable("data");
+                        mIv_photo.setImageBitmap(photo);
+                        mPresenter.saveAvatar(photo, 80, mPresenter.mOutputImageFile);
+
+                    }
+
                 }
             default:
                 break;
         }
     }
 
-    public void startPhotoZoom(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", true);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-        intent.putExtra("return-data", true);
-        intent.putExtra("noFaceDetection", true);
-        startActivityForResult(intent, CUTTING);
-    }
-
-    /**
-     * 保存图片数据
-     *
-     * @param picdata
-     */
-    private void setPicToView(Intent picdata) {
-        Bundle extras = picdata.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            mIv_photo.setImageBitmap(photo);
-            mPresenter.saveAvatar(photo, 80, mOutputImageFile);
-
-        }
-
-    }
-
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+        startOtherActivity(new Intent(this, LoginActivity.class));
     }
 
     private void initView() {
@@ -346,7 +315,7 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
 
     @Override
     public void showRegisterDialog() {
-        if(mProgressDialog==null){
+        if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("注册中。。");
             mProgressDialog.setCanceledOnTouchOutside(false);
@@ -356,7 +325,7 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
 
     @Override
     public void closeRegisterDialog() {
-        if(mProgressDialog!=null){
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }
@@ -364,7 +333,7 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
     @Override
     public void registerSuccess(User user) {
         mUser = user;
-        mPresenter.uploadAvatar(mOutputImageFile,user.getUsername());
+        mPresenter.uploadAvatar(mPresenter.mOutputImageFile, user.getUsername());
     }
 
 
@@ -391,14 +360,14 @@ public class RegisterActivity extends BaseActivity<RegistePresenterImpl> impleme
 
     @Override
     public void uploadAvatartFail(String msg) {
-        ToastTool.shotMessage("头像设置失败:"+msg);
+        ToastTool.shotMessage("头像设置失败:" + msg);
         toLogin();
     }
 
 
     @Override
     public void closeUpdateAvatarDialog() {
-        if(mProgressDialog!=null){
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }

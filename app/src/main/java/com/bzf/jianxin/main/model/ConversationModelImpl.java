@@ -1,6 +1,5 @@
 package com.bzf.jianxin.main.model;
 
-import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BaseModel;
 import com.bzf.jianxin.bean.Conversation;
 import com.bzf.jianxin.bean.Users;
@@ -18,43 +17,21 @@ public class ConversationModelImpl extends BaseModel implements ConversationMode
     private static final String TAG = ConversationModelImpl.class.getName();
 
     @Override
-    public void getConversationList(final BaseCallbackListener<List<Conversation>> listener) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ConversationDao dao = new ConversationDao(getCurrentLoginUser());
-                    dao.beginTrasaction();
-                    List<Conversation> conversations = dao.queryAll();
-                    dao.endTrasaction();
-                    listener.success(conversations);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    listener.fail(e);
-                }
-
-            }
-        }).start();
+    public List<Conversation> getConversationList() throws Exception{
+        ConversationDao dao = new ConversationDao(getCurrentLoginUser());
+        dao.beginTrasaction();
+        List<Conversation> conversations = dao.queryAll();
+        dao.endTrasaction();
+        return  conversations;
     }
 
     @Override
-    public void getUpdateConversationList(final BaseCallbackListener<List<Conversation>> listener) {
-       new Thread(new Runnable() {
-           @Override
-           public void run() {
-               try {
-                   ConversationDao conversationDao = new ConversationDao(getCurrentLoginUser());
-                   conversationDao.beginTrasaction();
-                   List<Conversation> conversations = conversationDao.queryAll();
-                   conversationDao.endTrasaction();
-                   listener.success(conversations);
-               } catch (Exception e) {
-                   e.printStackTrace();
-                   listener.fail(e);
-               }
-
-           }
-       }).start();
+    public  List<Conversation> getUpdateConversationList() throws Exception{
+        ConversationDao conversationDao = new ConversationDao(getCurrentLoginUser());
+        conversationDao.beginTrasaction();
+        List<Conversation> conversations = conversationDao.queryAll();
+        conversationDao.endTrasaction();
+       return conversations;
     }
 
     @Override
@@ -65,7 +42,7 @@ public class ConversationModelImpl extends BaseModel implements ConversationMode
                 @Override
                 public void run() {
                     try {
-                        ConversationDao dao = new ConversationDao(new UserModelImpl().getCurrentUser().getUsername());
+                        ConversationDao dao = new ConversationDao(new UserModelImpl().getCurrentLoginUser().getUsername());
                         dao.beginTrasaction();
                         dao.update(conversation);
                         dao.endTrasaction();
@@ -84,7 +61,7 @@ public class ConversationModelImpl extends BaseModel implements ConversationMode
     private String getCurrentLoginUser() {
         String username = null;
         UserModelImpl userModel = new UserModelImpl();
-        Users currentUser = userModel.getCurrentUser();
+        Users currentUser = userModel.getCurrentLoginUser();
         if(currentUser!=null){
             username =  currentUser.getUsername();
         }

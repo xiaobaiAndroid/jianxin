@@ -107,7 +107,7 @@ public class MessageDisposeManger {
      */
     private void saveData(List<EMMessage> list) {
         try {
-            ConversationDao dao = new ConversationDao(new UserModelImpl().getCurrentUser().getUsername());
+            ConversationDao dao = new ConversationDao(new UserModelImpl().getCurrentLoginUser().getUsername());
             List<Conversation> conversations = conversionEMMessageToConversation(list);
             LogTool.i(TAG, " List<Conversation> =" + conversations.toString());
             dao.beginTrasaction();

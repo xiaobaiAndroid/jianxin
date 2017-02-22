@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,11 +9,15 @@
         <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
-    <style name="ActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:activityOpenEnterAnimation">@anim/activity_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_out</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_in</item>
     </style>
     
     <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">

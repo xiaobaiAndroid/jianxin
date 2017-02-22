@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder> {
 
     private List<Conversation> mList;
-    private ContactsAdapter.OnItemClickListener onItemClickListener;
+//    private ContactsAdapter.OnItemClickListener onItemClickListener;
     private Context mContext;
 
     public ConversationAdapter(List<Conversation> list) {
@@ -34,9 +34,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     }
 
 
-    public void setOnItemClickListener(ContactsAdapter.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
+//    public void setOnItemClickListener(ContactsAdapter.OnItemClickListener onItemClickListener) {
+//        this.onItemClickListener = onItemClickListener;
+//    }
 
     @Override
     public ConversationViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -91,7 +91,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
         @Override
         public void onClick(View view) {
-            onItemClickListener.OnItemListener(view, getLayoutPosition());
+//            onItemClickListener.OnItemListener(view, getLayoutPosition());
         }
     }
 

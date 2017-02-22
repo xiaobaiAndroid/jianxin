@@ -1,6 +1,5 @@
 package com.bzf.jianxin.chat.model;
 
-import com.bzf.jianxin.base.BaseCallbackListener;
 import com.bzf.jianxin.base.BaseModel;
 import com.bzf.jianxin.chat.widget.ChatItemListViewBean;
 import com.bzf.jianxin.commonutils.HuanXinTool;
@@ -56,27 +55,16 @@ public class MessageModelImpl extends BaseModel implements MessageModel{
     }
 
     @Override
-    public void getMsgById(final String contactUsername, final String msgId, final BaseCallbackListener<ChatItemListViewBean> listener) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    EMMessage emMessage = HuanXinTool.getMessage(contactUsername, msgId, true);
-                    ChatItemListViewBean bean = new ChatItemListViewBean();
-                    EMMessageBody body = emMessage.getBody();
-                    if(body instanceof EMTextMessageBody){
-                        EMTextMessageBody textBody = (EMTextMessageBody) body;
-                        bean.setText(textBody.getMessage());
-                    }
-                    bean.setType(ChatItemListViewBean.RECEIVER_TYPE);
-                    listener.success(bean);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    listener.fail(e);
-                }
-            }
-        }).start();
-
+    public ChatItemListViewBean getMsgById(final String contactUsername, final String msgId)throws Exception {
+        EMMessage emMessage = HuanXinTool.getMessage(contactUsername, msgId, true);
+        ChatItemListViewBean bean = new ChatItemListViewBean();
+        EMMessageBody body = emMessage.getBody();
+        if(body instanceof EMTextMessageBody){
+            EMTextMessageBody textBody = (EMTextMessageBody) body;
+            bean.setText(textBody.getMessage());
+        }
+        bean.setType(ChatItemListViewBean.RECEIVER_TYPE);
+        return bean;
     }
 
 }

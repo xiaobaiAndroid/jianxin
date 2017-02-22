@@ -9,6 +9,7 @@ import com.bzf.jianxin.R;
 import com.bzf.jianxin.base.BaseActivity;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.login.widget.LoginActivity;
+import com.bzf.jianxin.main.widget.MainActivity;
 import com.bzf.jianxin.set.presenter.SetPresenterImpl;
 import com.bzf.jianxin.set.view.ExitLoginView;
 
@@ -43,13 +44,16 @@ public class SetActivity extends BaseActivity<SetPresenterImpl> implements ExitL
 
     @Override
     public void exitLoginSuccess() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        startOtherActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override
     public void exitLoginFail(String msg) {
         ToastTool.shotMessage(msg);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startOtherActivity(new Intent(this, MainActivity.class));
     }
 }
