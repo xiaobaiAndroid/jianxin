@@ -114,7 +114,7 @@ public class RegistePresenterImpl extends BasePresenter<RegisterView, UserModelI
     public void createSaveImageFile(Context context) throws Exception{
         String packageName = AppTool.getPackageName(context);
         String dirName = packageName.substring(packageName.lastIndexOf(".") + 1) + "/avatar";
-        File dir = FileTool.createDir(dirName);
+        File dir = FileTool.createDir(context,dirName);
         String imagName = DateTool.fromateDate(new Date(), DateTool.PATTERN_1) + ".jpg";
         mOutputImageFile = FileTool.createFile(dir.getAbsolutePath(), imagName);
     }

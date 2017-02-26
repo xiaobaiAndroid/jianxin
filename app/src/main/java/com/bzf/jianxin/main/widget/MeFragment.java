@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bzf.jianxin.R;
 import com.bzf.jianxin.base.BaseFragment;
 import com.bzf.jianxin.bean.User;
+import com.bzf.jianxin.commonutils.LogTool;
 import com.bzf.jianxin.commonutils.ToastTool;
 import com.bzf.jianxin.main.presenter.MePresenterImpl;
 import com.bzf.jianxin.main.view.MeView;
@@ -93,6 +94,7 @@ public class MeFragment extends BaseFragment<MePresenterImpl> implements MeView{
     protected void init() {
         mPresenter = new MePresenterImpl(this);
         mPresenter.getUserInfo();
+        mPresenter.createQRCode(getApplicationContext());
     }
 
     /**
@@ -210,5 +212,10 @@ public class MeFragment extends BaseFragment<MePresenterImpl> implements MeView{
     @Override
     public void updateAvatarFail(String msg) {
         ToastTool.shotMessage(msg);
+    }
+
+    @Override
+    public void createQRCodeFaile(String errorMsg) {
+        LogTool.i("bzf",getClass().getName()+"---"+errorMsg);
     }
 }

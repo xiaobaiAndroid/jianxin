@@ -1,6 +1,6 @@
 package com.bzf.jianxin.commonutils;
 
-import android.os.Environment;
+import android.content.Context;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,13 +27,13 @@ public class FileTool {
     /**
      * 创建目录
      *
+     * @param context
      * @param pathName
      * @return
+     * @throws Exception
      */
-    public static File createDir(String pathName) throws Exception {
-        String path = Environment.getExternalStorageDirectory() + "/" + pathName;
-        LogTool.i(TAG, "createDir--path=" + path);
-        File dir = new File(path);
+    public static File createDir(Context context, String pathName) throws Exception {
+        File dir = new File(context.getExternalCacheDir(),pathName);
         if (dir != null) {
             if (!dir.exists()) {
                 dir.mkdirs();
